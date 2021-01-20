@@ -11,4 +11,6 @@ const GetUser = () => {
     })
 }
 
-export default GetUser;
+export {
+    GetUser
+};

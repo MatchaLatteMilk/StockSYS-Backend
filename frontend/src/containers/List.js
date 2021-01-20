@@ -1,21 +1,26 @@
 import React, {useState,useEffect} from 'react';
 import "../styles/List.css";
-import Listuser from "../services/Listuser.Service";
+import { GetUser } from "../services/Listuser.Service";
 
 
 export default function Userlist() {
     const [users,getusers] = useState('');
 
-    componentDidMount(){
-        
-    }
+    useEffect(() => {
+        const data = GetUser()
+        getusers(data)
+    }, []);
 
     return(
-        getusers.map((user, index) => {
-            console.log(user);
-            return(
-                <li key={index}>Test</li>
-            )
-        })
+        <>
+            {users && users.length > 0 ? 
+                users.map((user, index) => {
+                    console.log(user);
+                    return(
+                        <li key={index}>Test</li>
+                    )
+                })
+            : <h1>no list</h1>}
+        </>
     )
 }
