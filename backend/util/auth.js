@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 //SIGNUP
 const signup = async (req,res) => {
     if(!req.body.username || !req.body.password){
-        return res.status(400).send({ message: 'need email & password' })
+        return res.status(400).send({ message: 'need username & password' })
     }else{
 
         try{
@@ -36,23 +36,26 @@ const signup = async (req,res) => {
 
 //SIGNIN
 const signin = async (req,res) => {
-    if (!req.body.email || !req.body.password){
-        return res.status(400).send({ message: 'need email and password' })
+    if (!req.body.username || !req.body.password){
+        return res.status(400).send({ message: 'need username and password' })
     }
-    const invalid = {message: 'invalid email & password combination'};
+    const invalid = {message: 'invalid username & password combination'};
 
     try{
-        const user = await User.findOne({username: req.body.username});
+        const user = await User.findOne({ username: req.body.username });
+        const password = await User.findOne({ password: getHash(req.body.username) });
+        console.log(getHash(req.body.password));
+        // console.log("user", user);
+        // console.log("password", password);
+        // if(!user) {
+        //     return res.status(401).send(invalid);
+        // }
 
-        if(!user) {
-            return res.status(401).send(invalid);
-        }
+        // const match = await bcrypt.compare(req.body.password, )
 
-        const match = await bcrypt.compare(req.body.password, User.password)
-
-        if(!match) {
-            return res.status(401).send(invalid);
-        }
+        // if(!match) {
+        //     return res.status(401).send(invalid);
+        // }
         const token = newjwt(user);
         return res.status(201).send({token});
     } catch (err) {

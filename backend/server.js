@@ -21,7 +21,7 @@ app.use('/api/user', userRouter);
 app.use('/api/product', productRouter);
 
 //SERVER START/ MONGODB
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 const start = async () => {
     try {
       await connect()
