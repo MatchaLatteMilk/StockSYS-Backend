@@ -1,22 +1,19 @@
 import axios from 'axios';
 
-function Asignin(data) {
-    console.log("data", data);
-    const APIurl = "http://localhost:5000/signin"
-    axios.post(APIurl,data)
+function Asignin(info) {
+    console.log("info", info);
+    const APIurl = "http://localhost:8080/signin"
+    axios.post(APIurl,info)
         .then((response) => {
-            console.log(response);
-            return response;
+            const status = response.status
+            const data = response.data
+            return {status,data}
         }, (error) => {
             console.log(error);
         });
 }
 
-function Check(data) {
-
-}
 
 export {
-    Asignin,
-    Check
+    Asignin
 }

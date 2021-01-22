@@ -14,6 +14,28 @@ export default function Signin() {
         return username.length > 0 && password.length > 0;
     }
 
+    function popup(signin) {
+        if(signin.status === 201) {
+            return(
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>LOGGED IN!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            )
+        } else {
+            return (
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>ERROR</strong> username or password combination is incorrect.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            )
+        }
+    }
+
     async function handleSubmit(event) {
         event.preventDefault();
         try {
@@ -21,6 +43,9 @@ export default function Signin() {
                 username,
                 password
             })
+
+            // console.log('signin',signin)
+            // popup(signin)
             // userHasAuthenticated(true);
         } catch (error) {
             alert(error);
