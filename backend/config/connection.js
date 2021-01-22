@@ -1,5 +1,5 @@
 const config = {
-    dburl : 'mongodb://localhost:27017/Stock_DB',
+    dburl : 'mongodb+srv://willywiraw:X20602070X@cluster0.peezf.mongodb.net/Stock_DB?retryWrites=true&w=majority',
     secret_key : 'secretkey123',
 }
 

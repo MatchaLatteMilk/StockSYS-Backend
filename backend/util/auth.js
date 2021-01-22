@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 
 //SIGNUP
 const signup = async (req,res) => {
+    console.log('/SignUp');
     if(!req.body.username || !req.body.password){
         return res.status(400).send({ message: 'need username & password' })
     }else{
@@ -36,26 +37,26 @@ const signup = async (req,res) => {
 
 //SIGNIN
 const signin = async (req,res) => {
+    console.log('/SignIn');
     if (!req.body.username || !req.body.password){
         return res.status(400).send({ message: 'need username and password' })
     }
-    const invalid = {message: 'invalid username & password combination'};
+    const invalid = {message: 'Incorrect username or password input'};
 
     try{
         const user = await User.findOne({ username: req.body.username });
-        const password = await User.findOne({ password: getHash(req.body.username) });
-        console.log(getHash(req.body.password));
-        // console.log("user", user);
-        // console.log("password", password);
-        // if(!user) {
-        //     return res.status(401).send(invalid);
-        // }
+        
+        if(!user) {
+            return res.status(401).send(invalid);
+        }
 
-        // const match = await bcrypt.compare(req.body.password, )
+        const match = await bcrypt.compare(req.body.password, user.password)
 
-        // if(!match) {
-        //     return res.status(401).send(invalid);
-        // }
+        if(!match) {
+            return res.status(401).send(invalid);
+        }
+        
+        console.log('Password match')
         const token = newjwt(user);
         return res.status(201).send({token});
     } catch (err) {
